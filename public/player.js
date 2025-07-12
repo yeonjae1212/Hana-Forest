@@ -18,11 +18,40 @@ export const Input = { //이동 input 블록
         return !!this.keys[key];
     }
 };
+
+function showDialog(obs, callback) {
+  if (document.getElementById("dialogBox")) return;
+
+  const dialog = document.createElement("div");
+  dialog.id = "dialogBox";
+
+  dialog.innerHTML = `
+    <p>${obs.name}</p>
+    <button id="yesBtn">예</button>
+    <button id="noBtn">아니오</button>
+  `;
+
+  document.body.appendChild(dialog);
+
+  document.getElementById("yesBtn").onclick = () => {
+    player.state = String(obs.name);
+    player.x = playerState[obs.name].x;
+    player.y = playerState[obs.name].y;
+    dialog.remove()
+    callback(player.state)
+  };
+
+  document.getElementById("noBtn").onclick = () => {
+    dialog.remove();
+  };
+}
+
 //------------------------------------------------
 //player object
 //------------------------------------------------
 const playerState = {//맵 별로 초기 시작 위치 다르게 설정 가능
-    classRoom:{x: 1010, y: 60} 
+    classRoom:{x: 1010, y: 60},
+    robot:{x: -100, y: -100}
 }
 
 export function isColliding(rect1, rect2) {
@@ -37,18 +66,18 @@ export function isColliding(rect1, rect2) {
 
 export let player = {
     state : "classRoom",
-    x :100,
-    y: 100,
+    x :150,
+    y: 150,
     width : 80,
     height: 80,
-    speed : 8,
+    speed : 15,
 
     init(){
         this.x = playerState[this.state].x;
         this.y = playerState[this.state].y;
 
     },
-    move(canvas, maplist) {
+    move(canvas, maplist,callback) {
         const prevX =this.x;
         const prevY = this.y;
         if (Input.isPressed('ArrowUp')) this.y -= this.speed;
@@ -63,11 +92,20 @@ export let player = {
         if (this.y < 0) this.y = 0;
         if (this.y + this.height > canvas.height)
         this.y = canvas.height - this.height;
+
         for (let obs of maplist[this.state].obstacles){
             if (isColliding(this, obs)) {
             this.x = prevX;
             this.y = prevY;
             }
+        }
+        for (let obs of maplist[this.state].interaction){
+            if (isColliding(this, obs)) {
+            this.x = prevX;
+            this.y = prevY;
+            showDialog(obs,callback);
+            break;
+        }
         }
 
     },

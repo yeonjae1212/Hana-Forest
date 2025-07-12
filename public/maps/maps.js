@@ -1,14 +1,24 @@
 import * as classRoom from './classroom.js'
+import * as robot from '../minigames/robot.js'
 
 export const maplist = {
-    classRoom: classRoom
+    classRoom: classRoom,
+    robot : robot
 }
 
-let imgLoaded = false;
+
 const img = new Image();
-img.src = "/images/classRoom.jpg";
-img.onload = () =>{
-    imgLoaded = true;
+img.src = '';
+let imgLoaded = false;
+
+
+export function loadMap(state){
+    imgLoaded = false;
+    img.src = `/images/${state}.jpg`;
+    img.onload = () =>{
+        imgLoaded = true;
+}
+
 }
 
 export function drawMap(ctx, canvas, player){
