@@ -1,0 +1,27 @@
+import { Block } from "./block.js";
+
+export const obstacles = [
+    new Block(0,0,100,100), //upper wall(l)
+    new Block(250,0,700,100), //upper wall(c)
+    new Block(1100,0,200,100), //upper wall(r)
+    new Block(0,220,40,500), //blackboard
+    new Block(180, 400, 60, 100), //lectern
+    new Block(380, 600, 80, 80), //table
+    new Block(1100, 420, 80, 80), //table
+    new Block(830, 600, 80, 80) //table
+]
+
+export const interaction = [
+    new Block( 550,400,100,100), //robot
+    new Block(980,280,80,80), // teatcher npc
+    new Block(100,0,150,100), // exit(l)
+    new Block(950,0,150,100) // exit(r)
+]
+
+export function newLocation(){
+
+}
+
+export function robot(){
+    
+}
