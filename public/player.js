@@ -99,13 +99,21 @@ export let player = {
             this.y = prevY;
             }
         }
+
+        let isCollidingAny = false;
+
         for (let obs of maplist[this.state].interaction){
-            if (isColliding(this, obs)) {
-            this.x = prevX;
-            this.y = prevY;
+          if (isColliding(this, obs)) {
+            // this.x = prevX;
+            // this.y = prevY;
             showDialog(obs,callback);
+            isCollidingAny = true;
             break;
+          }
         }
+        if (!isCollidingAny) {
+          const dialog = document.getElementById("dialogBox");
+          if (dialog) dialog.remove();
         }
 
     },
