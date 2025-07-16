@@ -1,9 +1,15 @@
-import * as classRoom from './classroom.js'
+import * as classroom from './classroom.js'
 import * as robot from '../minigames/robot.js'
+import * as classroomHallway from './classroomHallway.js'
+import * as studyRoom from './studyRoom.js'
+import * as dormHallway from './dormHallway.js'
 
 export const maplist = {
-    classRoom: classRoom,
-    robot : robot
+    classroom: classroom,
+    robot : robot,
+    classroomHallway: classroomHallway,
+    studyRoom: studyRoom,
+    dormHallway: dormHallway,
 }
 
 

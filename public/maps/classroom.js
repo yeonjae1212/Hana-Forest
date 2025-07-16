@@ -8,12 +8,12 @@ export const obstacles = [
     new Block(180, 400, 60, 100, "lectern"),
     new Block(380, 600, 80, 80, "table"),
     new Block(1100, 420, 80, 80, "table"),
-    new Block(830, 600, 80, 80,"table")
+    new Block(830, 600, 80, 80,"table"),
+    new Block(100,0,150,100,"doorShut"),
 ]
 
 export const interaction = [
     new Block( 600,300,100,100,"robot"),
     new Block(1020,280,80,80,"teatcher npc"), 
-    new Block(100,0,150,100,"exit(l)"),
-    new Block(950,0,150,100,"exit(r)")
+    new Block(950,0,150,100,"classroomHallway")
 ]
