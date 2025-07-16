@@ -1,17 +1,19 @@
 export const Input = { //이동 input 블록
     keys : {
-    ArrowLeft: false,
-    ArrowRight: false,
-    ArrowUp: false,
-    ArrowDown: false
+    w: false,
+    a: false,
+    s: false,
+    d: false
     },
 
     init() {
         document.addEventListener('keydown', (e) => {
-            if (e.key in this.keys) this.keys[e.key] = true;
+          const key = e.key.toLocaleLowerCase();
+          if (key in this.keys) this.keys[key] = true;
         });
         document.addEventListener('keyup', (e) => {
-            if (e.key in this.keys) this.keys[e.key] = false;
+          const key = e.key.toLocaleLowerCase();
+            if (key in this.keys) this.keys[key] = false;
         });
     },
     isPressed(key) {
@@ -75,17 +77,6 @@ function showWhereToGo(obs,callback){
 });
 }
 
-//------------------------------------------------
-//player object
-//------------------------------------------------
-const playerState = {//맵 별로 초기 시작 위치 다르게 설정 가능
-    classroom:{x: 1010, y: 60},
-    robot:{x: -100, y: -100},
-    classroomHallway:{x:1000,y:600,xin:1100,yin:450},
-    studyRoom:{xin:250,yin:550},
-    dormHallway:{x:100,y:100,xin:1100,yin:360}
-}
-
 export function isColliding(rect1, rect2) {
   return !(
     rect1.x + rect1.width <= rect2.x ||   // rect1이 rect2 왼쪽에 있음
@@ -95,6 +86,18 @@ export function isColliding(rect1, rect2) {
   );
 }
 
+//------------------------------------------------
+//player object
+//------------------------------------------------
+const playerState = {//맵 별로 초기 시작 위치 다르게 설정 가능
+    classroom:{x: 1010, y: 60},
+    robot:{x: -100, y: -100},
+    classroomHallway:{x:1000,y:600,xin:1100,yin:450},
+    studyRoom:{xin:250,yin:550},
+    dormHallway:{x:430,y:130,xin:1100,yin:360},
+    dorm: { x: 990, y: 590 },
+    closetGame: { x: 100, y: 590 }, 
+}
 
 export let player = {
     state : "dormHallway",
@@ -112,10 +115,10 @@ export let player = {
     move(canvas, maplist,callback) {
         const prevX =this.x; //충돌시 위치 설정을 위해 미리 정의해둠
         const prevY = this.y;
-        if (Input.isPressed('ArrowUp')) this.y -= this.speed; //조작
-        if (Input.isPressed('ArrowDown')) this.y += this.speed;
-        if (Input.isPressed('ArrowLeft')) this.x -= this.speed;
-        if (Input.isPressed('ArrowRight')) this.x += this.speed;
+        if (Input.isPressed('w')) this.y -= this.speed; //조작
+        if (Input.isPressed('s')) this.y += this.speed;
+        if (Input.isPressed('a')) this.x -= this.speed;
+        if (Input.isPressed('d')) this.x += this.speed;
 
         //캔버스 밖으로 못 나가게 처리(x)
         if (this.x < 0) this.x = 0; 

@@ -3,6 +3,8 @@ import * as robot from '../minigames/robot.js'
 import * as classroomHallway from './classroomHallway.js'
 import * as studyRoom from './studyRoom.js'
 import * as dormHallway from './dormHallway.js'
+import * as closetGame from '../minigames/closetGame.js'
+import * as dorm from './dorm.js'
 
 export const maplist = {
     classroom: classroom,
@@ -10,6 +12,9 @@ export const maplist = {
     classroomHallway: classroomHallway,
     studyRoom: studyRoom,
     dormHallway: dormHallway,
+    dorm : dorm,
+    closetGame : closetGame
+
 }
 
 
