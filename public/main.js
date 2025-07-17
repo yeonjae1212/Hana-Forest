@@ -1,4 +1,4 @@
-import { player, Input } from "./player.js";
+import { player, Input ,isColliding} from "./player.js";
 import { maplist, drawMap, loadMap} from "./maps/maps.js";
 
 export const canvas = document.getElementById('canvas');
@@ -15,6 +15,12 @@ function frame(){
     requestAnimationFrame(frame)
     ctx.clearRect(0,0, canvas.width, canvas.height);
 
+    if(player.state === 'card'){
+        if(!maplist['card'].isInitialized){
+            maplist['card'].init(player);
+        }
+        maplist['card'].gameLoop(player,isColliding,loadMap)
+    }
     drawMap(ctx,canvas,player);
     player.move(canvas, maplist,loadMap);
     player.draw(ctx);

@@ -8,5 +8,5 @@ export const obstacles = [
 export const interaction = [
     new Block(1200,100,100,600,'whereToGo'),
     new Block(400,0,150,100,'dorm'),
-    new Block(200,380,80,80,'dorm npc')
+    new Block(200,380,80,80,'card')
 ]

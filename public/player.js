@@ -97,10 +97,12 @@ const playerState = {//맵 별로 초기 시작 위치 다르게 설정 가능
     dormHallway:{x:430,y:130,xin:1100,yin:360},
     dorm: { x: 990, y: 590 },
     closetGame: { x: 100, y: 590 }, 
+    card :{x:500,y:500}
 }
 
 export let player = {
     state : "dormHallway",
+    mode: "",
     x :600,
     y: 500,
     width : 80,
