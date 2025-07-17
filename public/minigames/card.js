@@ -1,11 +1,11 @@
 import {Block} from "../maps/block.js"
-const canvas = document.getElementById('canvas');
-const canvasRect = canvas.getBoundingClientRect();
+const canvas = document.getElementById('canvas'); //canvas에 맞춰 DOM 위치 조정 위해 불러옴
+const canvasRect = canvas.getBoundingClientRect(); //DOM 표시 위해 외곽 좌표 계산
 
 // -----------------------------------------------------------
 //스코어(게임 초) html DOM으로 표시
 //------------------------------------------------------------
-const scoreDisplay = document.createElement("div");
+const scoreDisplay = document.createElement("div"); 
 scoreDisplay.id = "scoreDisplay";
 scoreDisplay.innerHTML = `<div id="score">Score: 0.0s</div>`;
 scoreDisplay.classList.add('scoreDisplay')
@@ -33,18 +33,18 @@ startContainer.style.zIndex = 10;
 //게임 실패, 성공 시 메시지 띄우는 함수 정의
 //------------------------------------------------------------
 export function showEndMessage(message, delay = 1500) {
-    const canvasRect = canvas.getBoundingClientRect();
-    const messageBox = document.createElement('div');
-    messageBox.style.left = `${canvasRect.left + canvasRect.width / 2}px`;
+    const canvasRect = canvas.getBoundingClientRect(); //canvas 외곽선 검출
+    const messageBox = document.createElement('div'); //메시지 박스 DOM 생성
+    messageBox.style.left = `${canvasRect.left + canvasRect.width / 2}px`; //위치 지정
     messageBox.style.top = `${canvasRect.top + canvasRect.height / 2}px`;
     messageBox.style.transform = 'translate(-50%, -50%)';
 
     messageBox.className = 'messageBox';  // CSS 클래스 지정
-    messageBox.textContent = message;
-    document.body.appendChild(messageBox);
+    messageBox.textContent = message; //메시지는 인수로 전달
+    document.body.appendChild(messageBox); //DOM 화면에 표시
 
     setTimeout(() => {
-        messageBox.remove();
+        messageBox.remove(); //잠깐 기다렸다가 메시지박스 제거
     }, delay);
 }
 
@@ -52,26 +52,26 @@ export function showEndMessage(message, delay = 1500) {
 // -----------------------------------------------------------
 //게임 기본 변수 설정
 //------------------------------------------------------------
-export let isInitialized = false;
-export let frameCount = 0;
+export let isInitialized = false; //초기와 여부 표시 변수
+export let frameCount = 0; //시간 카운트용 프레임 카운트 변수
 
-let startTime = null;
-let gameOver = false;
+let startTime = null; 
+let gameOver = false; //게임 실패 여부 표시 변수
 let maxTime = 5000; // 5초
 
-export let obstacles = []
-export let interaction = []
+export let obstacles = [] //여기에 장애물 삽입할거임
+export let interaction = [] //오류 방지용으로 넣어둔 interaction array
 
 
 // -----------------------------------------------------------
 //게임 설정 초기화 함수
 //------------------------------------------------------------
 export function init(player) {
-    if (!document.getElementById("scoreDisplay")) {
+    if (!document.getElementById("scoreDisplay")) { //시간 표시
         document.body.appendChild(scoreDisplay);
-    }
+    } 
 
-    if (!document.getElementById("startContainer")) {
+    if (!document.getElementById("startContainer")) { //시작 버튼 표시
         document.body.appendChild(startContainer);
     }
 
@@ -141,7 +141,7 @@ function move(player,callback){
 // -----------------------------------------------------------
 //게임 실행 루프
 //------------------------------------------------------------
-export function gameLoop(player,callback,loadMap){
+export function gameLoop(player,callback,loadMap){ //이걸 main.js에서 불러서 분기해서 루프 사용
     if (!isInitialized) return;
 
     frameCount++;
