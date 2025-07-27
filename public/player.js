@@ -95,19 +95,19 @@ const playerState = {//맵 별로 초기 시작 위치 다르게 설정 가능
     classroomHallway:{x:1000,y:600,xin:1100,yin:450},
     studyRoom:{xin:250,yin:550},
     dormHallway:{x:430,y:130,xin:1100,yin:360},
-    dorm: { x: 990, y: 590 },
+    dorm: { x: 580, y : 570},
     closetGame: { x: 100, y: 590 }, 
     card :{x:500,y:500}
 }
 
 export let player = {
-    state : "dormHallway",
+    state : "dorm",
     mode: "",
-    x :600,
-    y: 500,
+    x : 990,
+    y: 590,
     width : 80,
     height: 80,
-    speed : 19,
+    speed : 10,
 
     init(){
         this.x = playerState[this.state].x;
@@ -115,12 +115,20 @@ export let player = {
 
     },
     move(canvas, maplist,callback) {
-        const prevX =this.x; //충돌시 위치 설정을 위해 미리 정의해둠
-        const prevY = this.y;
-        if (Input.isPressed('w')) this.y -= this.speed; //조작
-        if (Input.isPressed('s')) this.y += this.speed;
-        if (Input.isPressed('a')) this.x -= this.speed;
-        if (Input.isPressed('d')) this.x += this.speed;
+        const prevX = this.x;
+      const prevY = this.y;
+
+    if (this.state === 'closetGame') {
+    // closetGame에서는 좌우 이동만 허용
+    if (Input.isPressed('a')) this.x -= this.speed;
+    if (Input.isPressed('d')) this.x += this.speed;
+    } else {
+    // 나머지 맵에서는 모든 방향 허용
+    if (Input.isPressed('w')) this.y -= this.speed;
+    if (Input.isPressed('s')) this.y += this.speed;
+    if (Input.isPressed('a')) this.x -= this.speed;
+    if (Input.isPressed('d')) this.x += this.speed;
+  }
 
         //캔버스 밖으로 못 나가게 처리(x)
         if (this.x < 0) this.x = 0; 
@@ -161,9 +169,22 @@ export let player = {
     },
 
     draw(ctx){
+    if (this.state === 'closetGame') {
+        const img = imageAssets.cart;
+        if (img && img.complete && img.naturalWidth > 0) {
+            ctx.drawImage(img, this.x, this.y, this.width, this.height);
+        } else {
+            // 이미지 로드 실패 시 fallback
+            ctx.fillStyle = 'green';
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+    } else {
+        // 기본 그리기 방식
         ctx.fillStyle = 'green';
-        ctx.fillRect(this.x, this.y, this.width, this.height)
-    },
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+}
+,
 
 }
 
