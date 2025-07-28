@@ -91,7 +91,7 @@ export function isColliding(rect1, rect2) {
 //------------------------------------------------
 const playerState = {//맵 별로 초기 시작 위치 다르게 설정 가능
     classroom:{x: 1010, y: 100},
-    robot:{x: -100, y: -100},
+    robot:{x: -100, y: 100},
     classroomHallway:{x:1000,y:600,xin:1100,yin:450},
     studyRoom:{xin:250,yin:550},
     dormHallway:{x:430,y:130,xin:1100,yin:360},

@@ -17,8 +17,8 @@ startContainer.innerHTML = `
     <button id="startGameBtn">Start</button>`;
 startContainer.classList.add("scoreDisplay")
 startContainer.style.position = "absolute";
-startContainer.style.left = `${canvasRect.left + canvasRect.width / 1.5}px`;
-startContainer.style.top = `${canvasRect.top + canvasRect.height / 1.5}px`;
+startContainer.style.left = `${canvasRect.left + canvasRect.width /2}px`;
+startContainer.style.top = `${canvasRect.top + canvasRect.height /2}px`;
 startContainer.style.transform = 'translate(-50%, -50%)';
 startContainer.style.zIndex = 10;
 //창 배경 설정
@@ -33,17 +33,24 @@ startContainer.style.textAlign = "center";
 export function showEndMessage(message, delay = 1500) {
     const canvasRect = canvas.getBoundingClientRect(); //canvas 외곽선 검출
     const messageBox = document.createElement('div'); //메시지 박스 DOM 생성
-    messageBox.style.left = `${canvasRect.left + canvasRect.width / 1.5}px`; //위치 지정
-    messageBox.style.top = `${canvasRect.top + canvasRect.height / 1.5}px`;
+    messageBox.style.left = `${canvasRect.left + canvasRect.width / 2}px`; //위치 지정
+    messageBox.style.top = `${canvasRect.top + canvasRect.height / 2}px`;
     messageBox.style.transform = 'translate(-50%, -50%)';
-
+    messageBox.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
+    messageBox.style.padding = "10px";
+    messageBox.style.border = "2px solid #333";
+    messageBox.style.borderRadius = "10px";
+    messageBox.style.textAlign = "center";
+    messageBox.style.fontSize = "10px";  
+    messageBox.style.color = "#000";     // 글씨 색 설정
+    messageBox.style.zIndex = "1000"; 
     messageBox.className = 'messageBox';  // CSS 클래스 지정
     messageBox.textContent = message; //메시지는 인수로 전달
     document.body.appendChild(messageBox); //DOM 화면에 표시
 
     setTimeout(() => {
         messageBox.remove(); //잠깐 기다렸다가 메시지박스 제거
-    }, delay);
+    }, 1500);
 }
 
 
@@ -61,25 +68,27 @@ let maxTime = 5000; // 5초
 export let obstacles = [];
 //found 요소를 새로 정의하기 위해 상속받아서
 export class HiddenObject extends Block {
-    constructor(x, y, width, height, name,imageSrc, message) {
+    constructor(x, y, width, height, name,imageSrc,message) {
         super(x, y, width, height, name,imageSrc);
         this.found = false;
-        this.message = this.message;
+        this.message = message;
     }
 }
 
 
 export let interaction = [
-    new HiddenObject(940, 300, 100,100,'sahur',"public/images/sahur.jpg", '로봇 조립을 방해하던 "퉁퉁퉁퉁퉁퉁 사후르"를 찾았습니다!'),
-    new HiddenObject(860,500,50,100,'tralalelo','public/images/tralalelo.jpg','로봇 조립을 방해하던 "트랄라레로 트랄랄라"를 찾았습니다!'),
-    new HiddenObject(1020, 450, 50, 100, 'hambook','public/images/hambook.jpg', '로봇 조립을 방해하던"햄부기햄북 햄북어 햄북스딱스 함부르크햄부가우가 햄비기햄부거 햄부가티햄부기온앤 온"을 차려왔습니다!')
+    new HiddenObject(940, 300, 100,100,'sahur',"/images/sahur.jpg", '로봇 조립을 방해하던 "퉁퉁퉁퉁퉁퉁 사후르"를 찾았습니다!'),
+    new HiddenObject(860,500,50,100,'tralalelo','/images/tralalelo.jpg','로봇 조립을 방해하던 "트랄라레로 트랄랄라"를 찾았습니다!'),
+    new HiddenObject(1020, 450, 50, 100, 'hambook','/images/hambook.jpg', '로봇 조립을 방해하던"햄부기햄북 햄북어 햄북스딱스 함부르크햄부가우가 햄비기햄부거 햄부가티햄부기온앤 온"을 차려왔습니다!')
 ];
 
 // -----------------------------------------------------------
 //게임 설정 초기화 함수
 //------------------------------------------------------------
 export function init(player) {
-
+      for (let obs of interaction){
+      obs.loadObj()
+    }
     if (!document.getElementById("startContainer")) { //시작 버튼 표시
         document.body.appendChild(startContainer);
         // 제목 스타일
@@ -91,13 +100,15 @@ export function init(player) {
         el.style.fontSize = "14px";
 });
     }
-
+    registerClickListener()
     frameCount = 0;
     player.x = -100;
-    player.y = -300;
+    player.y = 300;
     obstacles = [];
     startTime = performance.now();
     gameOver = false;
+
+
 
     const startBtn = document.getElementById("startGameBtn");
     startBtn.onclick = () => {
@@ -106,42 +117,44 @@ export function init(player) {
     };
 }
 
-// -----------------------------------------------------------
-//클릭 여부 판별
-//------------------------------------------------------------
-function isClick(rect1, X,Y) {
-  return !(
-    rect1.x + rect1.width <= X ||   // rect1이 rect2 왼쪽에 있음
-    rect1.x >= X ||   // rect1이 rect2 오른쪽에 있음
-    rect1.y + rect1.height <= Y ||  // rect1이 rect2 위에 있음
-    rect1.y >= Y     // rect1이 rect2 아래에 있음
-  );
-}
 
 // -----------------------------------------------------------
 //클릭 여부 판별
 //------------------------------------------------------------
 
-let clickRegistered = false;
+// 클릭 리스너를 한 번만 등록
+let clickListenerRegistered = false;
 
-function isFound() {
-  if (clickRegistered) return;
-  clickRegistered = true;
-
+function registerClickListener() {
+  if (clickListenerRegistered) return; // 중복 방지
+  clickListenerRegistered = true;
+  console.log(`registered`)
+  const canvas = document.getElementById("canvas");
+  
   canvas.addEventListener("click", (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const clickY = e.clientY - rect.top;
+    const canvasRect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / canvasRect.width;    // x축 비율 보정
+    const scaleY = canvas.height / canvasRect.height;  // y축 비율 보정
 
-    interaction.forEach((obj) => {
-      if (isClick(obj, clickX, clickY) && !obj.found) {
-        obj.found = true;
-        showEndMessage(obj.message);
-      }
-    });
+    const clickX = (e.clientX - canvasRect.left)*scaleX;
+    const clickY =( e.clientY - canvasRect.top)*scaleY;
+    console.log(`${clickX}${clickY}clicked`)
+    checkHiddenObjects(clickX, clickY);
   });
 }
 
+// 클릭한 좌표와 숨은 그림들 비교
+function checkHiddenObjects(x, y) {
+  interaction.forEach((obj) => {
+    if (!obj.found &&
+        x >= obj.x && x <= obj.x + obj.width &&
+        y >= obj.y && y <= obj.y + obj.height) {
+      obj.found = true;
+      showEndMessage(obj.message)
+      // 점수 증가, 효과음 재생 등 추가 가능
+    }
+  });
+}
 // -----------------------------------------------------------
 //메인 루프
 //------------------------------------------------------------
@@ -149,23 +162,22 @@ export function gameLoop(player,_,loadMap){ //이걸 main.js에서 불러서 분
     if (!isInitialized) return;
 
     for (let obs of interaction){
-        obs.drawImage(ctx)
+        obs.drawObj(ctx)
     }
 
+    if (interaction.every(block => block.found === true)) {
+        setTimeout(() => {
+            showEndMessage("성공!");
+        }, 1500); // 1초 후에 메시지 표시
 
-    isFound()
-
-    if ( interaction.every(block => block.found === true)) {
-        scoreDisplay.remove()
-        showEndMessage("성공!")
-        setTimeout(()=>{       
-        player.state = 'classroom'
-        loadMap('classroom')
-        player.x = 650;
-        player.y = 450;
-        return;
-        },500)
-
+        setTimeout(() => {       
+            player.state = 'classroom';
+            loadMap('classroom');
+            player.x = 650;
+            player.y = 450;
+            return;
+        }, 6000); // 메시지 표시 이후 0.5초 후에 맵 전환
     }
+
 
 }
