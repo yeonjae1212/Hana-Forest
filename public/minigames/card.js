@@ -48,7 +48,7 @@ startContainer.style.zIndex = "1000";
 // -----------------------------------------------------------
 //게임 실패, 성공 시 메시지 띄우는 함수 정의
 //------------------------------------------------------------
-export function showEndMessage(message, delay = 1500) {
+export function showEndMessage(message, delay = 500) {
     const canvasRect = canvas.getBoundingClientRect(); //canvas 외곽선 검출
     const messageBox = document.createElement('div'); //메시지 박스 DOM 생성
     messageBox.style.left = `${canvasRect.left + canvasRect.width / 2}px`; //위치 지정
