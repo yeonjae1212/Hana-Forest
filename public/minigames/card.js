@@ -83,6 +83,8 @@ export let frameCount = 0; //시간 카운트용 프레임 카운트 변수
 let startTime = null; 
 let gameOver = false; //게임 실패 여부 표시 변수
 let maxTime = 5000; // 5초
+let gameFinished = false;
+
 
 export let obstacles = [] //여기에 장애물 삽입할거임
 export let interaction = [] //오류 방지용으로 넣어둔 interaction array
@@ -149,7 +151,7 @@ function move(player,callback){
         if (obs.x + obs.width < 0) {
             obstacles.splice(i, 1);
         }
-        if (callback(player,obs)) {
+        if (!gameOver&&!gameFinished&&callback(player,obs)) {
             showEndMessage("실패 ㅠㅠ")
             setTimeout(()=>{
                 isInitialized = false;
@@ -168,7 +170,6 @@ function move(player,callback){
 //------------------------------------------------------------
 export function gameLoop(player,callback,loadMap){ //이걸 main.js에서 불러서 분기해서 루프 사용
     if (!isInitialized) return;
-
     frameCount++;
     const now = performance.now();
     const elapsed = now - startTime;
@@ -178,7 +179,8 @@ export function gameLoop(player,callback,loadMap){ //이걸 main.js에서 불러
     makeObs();
     move(player,callback);
 
-    if (elapsed >= maxTime) {
+    if (!gameFinished&&elapsed >= maxTime) {
+        gameFinished = true
         scoreDisplay.remove()
         player.key = 2
         console.log(`player key is changed to${player.key}`)

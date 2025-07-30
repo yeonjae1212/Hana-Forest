@@ -167,14 +167,14 @@ const playerState = {//맵 별로 초기 시작 위치 다르게 설정 가능
 }
 
 export let player = {
-    state : "classroom",
+    state : "dormHallway",
     mode: "",
     x : 1000,
     y: 600,
     width : 80,
     height: 80,
     speed : 10,
-    key: 10,
+    key: 1,
     interaction:true,
 
     
