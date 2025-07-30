@@ -8,7 +8,7 @@ canvas.width = 1280;
 canvas.height = 720;
 
 const miniGames = ['card', 'closetGame', 'robot']; // 필요한 만큼 확장 가능
-const playerStatic = ['robot'] //대화 등 플레이어 이동 제한 상황
+const playerStatic = ['robot','ending'] //대화 등 플레이어 이동 제한 상황
 
 Input.init();
 loadMap(player.state);
@@ -30,6 +30,7 @@ function frame() {
         player.move(canvas, maplist, loadMap);
         player.draw(ctx);
     }
+    
 
 }
 

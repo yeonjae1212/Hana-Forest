@@ -6,6 +6,7 @@ import * as dormHallway from './dormHallway.js'
 import * as closetGame from '../minigames/closetGame.js'
 import * as dorm from './dorm.js'
 import * as card from '../minigames/card.js'
+import * as ending from './ending.js'
 
 export const maplist = {
     classroom: classroom,
@@ -16,6 +17,7 @@ export const maplist = {
     dorm : dorm,
     closetGame : closetGame,
     card : card,
+    ending: ending,
 
 }
 
@@ -38,9 +40,13 @@ export function drawMap(ctx, canvas, player){
     if(imgLoaded)
         ctx.drawImage(img,0,0, canvas.width, canvas.height)
     for (let obs of maplist[player.state].obstacles){
-        obs.drawObstacle(ctx, 'red')
+        if(player.key == obs.key||obs.key==-1){        
+            obs.drawObstacle(ctx, 'red')
+        }
     }
     for (let i of maplist[player.state].interaction){
+        if(player.key == i.key||i.key==-1){
         i.drawObstacle(ctx,'blue')
+        }
     }
 }

@@ -13,6 +13,14 @@ scoreDisplay.style.position = "absolute";
 scoreDisplay.style.left = `${canvasRect.left + 20}px`;   // 캔버스 왼쪽에서 20px
 scoreDisplay.style.top = `${canvasRect.top + 20}px`;      // 캔버스 위에서 20px
 scoreDisplay.style.zIndex = 10;
+scoreDisplay.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
+scoreDisplay.style.padding = "10px";
+scoreDisplay.style.border = "2px solid #333";
+scoreDisplay.style.borderRadius = "5px";
+scoreDisplay.style.textAlign = "center";
+scoreDisplay.style.fontSize = "20px";  
+scoreDisplay.style.color = "#000";     // 글씨 색 설정
+scoreDisplay.style.zIndex = "1000"; 
 
 // -----------------------------------------------------------
 //게임 시작 버튼 html DOM으로 표시
@@ -28,6 +36,14 @@ startContainer.style.left = `${canvasRect.left + canvasRect.width / 2}px`;
 startContainer.style.top = `${canvasRect.top + canvasRect.height / 2}px`;
 startContainer.style.transform = 'translate(-50%, -50%)';
 startContainer.style.zIndex = 10;
+startContainer.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
+startContainer.style.padding = "10px";
+startContainer.style.border = "2px solid #333";
+startContainer.style.borderRadius = "5px";
+startContainer.style.textAlign = "center";
+startContainer.style.fontSize = "10px";  
+startContainer.style.color = "#000";     // 글씨 색 설정
+startContainer.style.zIndex = "1000"; 
 
 // -----------------------------------------------------------
 //게임 실패, 성공 시 메시지 띄우는 함수 정의
@@ -38,6 +54,15 @@ export function showEndMessage(message, delay = 1500) {
     messageBox.style.left = `${canvasRect.left + canvasRect.width / 2}px`; //위치 지정
     messageBox.style.top = `${canvasRect.top + canvasRect.height / 2}px`;
     messageBox.style.transform = 'translate(-50%, -50%)';
+    
+    messageBox.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
+    messageBox.style.padding = "10px";
+    messageBox.style.border = "2px solid #333";
+    messageBox.style.borderRadius = "5px";
+    messageBox.style.textAlign = "center";
+    messageBox.style.fontSize = "40px";  
+    messageBox.style.color = "#000";     // 글씨 색 설정
+    messageBox.style.zIndex = "1000"; 
 
     messageBox.className = 'messageBox';  // CSS 클래스 지정
     messageBox.textContent = message; //메시지는 인수로 전달
@@ -155,6 +180,8 @@ export function gameLoop(player,callback,loadMap){ //이걸 main.js에서 불러
 
     if (elapsed >= maxTime) {
         scoreDisplay.remove()
+        player.key = 2
+        console.log(`player key is changed to${player.key}`)
         showEndMessage("성공!")
         setTimeout(()=>{       
         player.state = 'dormHallway'

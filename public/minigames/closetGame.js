@@ -12,6 +12,14 @@ scoreDisplay.style.position = "absolute";
 scoreDisplay.style.left = `${canvasRect.left + 20}px`;
 scoreDisplay.style.top = `${canvasRect.top + 20}px`;
 scoreDisplay.style.zIndex = 10;
+scoreDisplay.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
+scoreDisplay.style.padding = "10px";
+scoreDisplay.style.border = "2px solid #333";
+scoreDisplay.style.borderRadius = "5px";
+scoreDisplay.style.textAlign = "center";
+scoreDisplay.style.fontSize = "20px";  
+scoreDisplay.style.color = "#000";     // 글씨 색 설정
+scoreDisplay.style.zIndex = "1000"; 
 
 export let isInitialized = false;
 export let frameCount = 0;
@@ -128,6 +136,12 @@ export function showEndMessage(message, delay = 3000, player = null, loadMap = n
     messageBox.style.border = "2px solid black";
     messageBox.style.padding = "20px";
     messageBox.style.textAlign = "center";
+    messageBox.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
+    messageBox.style.borderRadius = "5px";
+    messageBox.style.textAlign = "center";
+    messageBox.style.fontSize = "40px";  
+    messageBox.style.color = "#000";     // 글씨 색 설정
+    messageBox.style.zIndex = "1000";
     messageBox.style.zIndex = 9999;
     messageBox.textContent = message;
     document.body.appendChild(messageBox);
@@ -211,6 +225,8 @@ export function gameLoop(player, _, loadMap) {
     if (score >= goalScore) {
         gameOver = true;
         scoreDisplay.remove();
+        player.key = 9
+        console.log(`player key is changed to${player.key}`)
         showEndMessage("성공!", 3000, player, loadMap);
         return;
     }

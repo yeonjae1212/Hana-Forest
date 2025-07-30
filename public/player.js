@@ -29,24 +29,50 @@ function button(state,callback,dialog){
     callback(state)
 }
 
-function showDialog(obs, callback) {
+
+function showDialog(obs, callback,canvas) {
   if (document.getElementById("dialogBox")) return;
 
   const dialog = document.createElement("div");
   dialog.id = "dialogBox";
 
+  
   dialog.innerHTML = `
-    <p>${obs.name}</p>
+    <p>${obs.message}</p>
     <button id="yesBtn">예</button>
     <button id="noBtn">아니오</button>
   `;
 
+  dialog.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
+  dialog.style.padding = "10px";
+  dialog.style.border = "2px solid #333";
+  dialog.style.borderRadius = "5px";
+  dialog.style.textAlign = "center";
+  dialog.style.fontSize = "10px";
+  dialog.style.color = "#000";
+  dialog.style.zIndex = "1000";
+
+  // 위치 지정 (화면 중앙 고정)
+  dialog.style.position = "absolute";
+  const canvasRect = canvas.getBoundingClientRect(); //canvas 외곽선 검출
+  dialog.style.left = `${canvasRect.left + canvasRect.width / 2}px`; //위치 지정
+  dialog.style.top = `${canvasRect.top + canvasRect.height / 2}px`;
+  dialog.style.transform = "translate(-50%, -50%)";
+
   document.body.appendChild(dialog);
 
   document.getElementById("yesBtn").onclick = () => {
+
+    if(obs.action){
+      dialog.remove()
+      player.interaction = false
+      obs.action(player,dialog)
+    }
+    else{    
     player.state = obs.name;
     player.x = playerState[obs.name].x;
-    player.y = playerState[obs.name].y;
+    player.y = playerState[obs.name].y;}
+
     dialog.remove();
     callback(player.state)
   };
@@ -56,18 +82,57 @@ function showDialog(obs, callback) {
   };
 }
 
-function showWhereToGo(obs,callback){
+function showWhereToGo(obs,callback,canvas){
     if (document.getElementById("dialogBox")) return;
 
   const dialog = document.createElement("div");
   dialog.id = "dialogBox";
 
-  dialog.innerHTML = `
-    <p>${obs.name}</p>
-    <button id="studyRoom">면학실</button>
-    <button id="dormHallway">기숙사</button>
-    <button id= "classroomHallway">교과교실</button>
-  `;
+  const study =  `<button id="studyRoom">면학실</button>`
+  const dorm =  `<button id="dormHallway">기숙사</button>`
+  const classroom = `<button id= "classroomHallway">교과교실</button>`
+  const m = `<p>${obs.message}</p>`
+
+  if(player.key<=1){ dialog.innerHTML = `
+    <p>생활관 선생님이 부르시는것 같아!</p>`;
+  }
+  else if(player.key===2){
+    dialog.innerHTML = m+classroom
+  }
+  else if(player.key==3){
+    dialog.innerHTML = `
+    <p>교실 안에서 선생님이 기다리고 계신것 같은데?</p>`;
+  }
+  else if(player.key==4){
+    dialog.innerHTML = `
+    <p>선생님이 부르시는것 같아!</p>`;
+  }
+  else if(player.state =='classroomHallway'){
+    dialog.innerHTML = m+study+dorm
+  }
+  else if(player.state == 'studyRoom'){
+    dialog.innerHTML = m+classroom+dorm
+  }
+  else if(player.state =='dormHallway'){
+    dialog.innerHTML = m+classroom+study
+  }
+  else{  
+    dialog.innerHTML = m+study+dorm+classroom;}
+
+  dialog.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
+  dialog.style.padding = "10px";
+  dialog.style.border = "2px solid #333";
+  dialog.style.borderRadius = "5px";
+  dialog.style.textAlign = "center";
+  dialog.style.fontSize = "10px";
+  dialog.style.color = "#000";
+  dialog.style.zIndex = "1000";
+  dialog.style.position = "absolute";
+  const canvasRect = canvas.getBoundingClientRect(); //canvas 외곽선 검출
+  dialog.style.left = `${canvasRect.left + canvasRect.width / 2}px`; //위치 지정
+  dialog.style.top = `${canvasRect.top + canvasRect.height / 2}px`;
+  dialog.style.transform = "translate(-50%, -50%)";
+  
 
   document.body.appendChild(dialog);
 ["studyRoom", "dormHallway", "classroomHallway"].forEach(id => {
@@ -90,25 +155,29 @@ export function isColliding(rect1, rect2) {
 //player object
 //------------------------------------------------
 const playerState = {//맵 별로 초기 시작 위치 다르게 설정 가능
-    classroom:{x: 1010, y: 100},
+    classroom:{x: 300, y: 100},
     robot:{x: -100, y: 100},
-    classroomHallway:{x:1000,y:600,xin:1100,yin:450},
+    classroomHallway:{x:300,y:400,xin:1100,yin:450},
     studyRoom:{xin:250,yin:550},
     dormHallway:{x:430,y:130,xin:1100,yin:360},
     dorm: { x: 580, y : 570},
     closetGame: { x: 100, y: 590 }, 
-    card :{x:500,y:500}
+    card :{x:500,y:500},
+    ending:{x:0,y:0}
 }
 
 export let player = {
-    state : "classroom",
+    state : "dorm",
     mode: "",
-    x : 1010,
-    y: 100,
+    x : 250,
+    y: 550,
     width : 80,
     height: 80,
     speed : 10,
+    key: 0,
+    interaction:true,
 
+    
     init(){
         this.x = playerState[this.state].x;
         this.y = playerState[this.state].y;
@@ -139,9 +208,9 @@ export let player = {
         if (this.y + this.height > canvas.height)
         this.y = canvas.height - this.height;
 
-        //obstacles와 출돌 처리 함수 호출
+        //obstacles와 충돌 처리 함수 호출
         for (let obs of maplist[this.state].obstacles){
-            if (isColliding(this, obs)) {
+            if (isColliding(this, obs)&&(this.key == obs.key||obs.key==-1)) {
             this.x = prevX;
             this.y = prevY;
             }
@@ -151,12 +220,12 @@ export let player = {
         let isCollidingAny = false;
         for (let obs of maplist[this.state].interaction){
           if(isColliding(this, obs)&&obs.name=='whereToGo'){
-            showWhereToGo(obs,callback)
+            showWhereToGo(obs,callback,canvas)
             isCollidingAny = true;
             break;
           }
-          else if (isColliding(this, obs)) {
-            showDialog(obs,callback);
+          else if (isColliding(this, obs)&&(this.key == obs.key||obs.key==-1)&&this.interaction) {
+            showDialog(obs,callback,canvas);
             isCollidingAny = true;
             break;
           }
