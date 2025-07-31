@@ -47,7 +47,7 @@ nextBtn.onclick = () => {
 
     // 마지막 이미지일 때 텍스트 변경
     if (currentImageIndex === tutorialImages.length - 1) {
-      nextBtn.innerText = "튜토리얼 끄읏!";
+      nextBtn.innerText = "튜토리얼 완료";
     }
   } else {
     completeTutorial();

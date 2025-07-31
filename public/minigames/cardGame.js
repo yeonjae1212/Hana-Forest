@@ -128,6 +128,7 @@ export let interaction = [];
 //------------------------------------------------------------
 
 export function init(player) {
+  console.log('game started')
   if (!document.getElementById("scoreDisplay")) {
     canvasWrapper.appendChild(scoreDisplay);
   }

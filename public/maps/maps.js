@@ -5,9 +5,10 @@ import * as studyRoom from './studyRoom.js'
 import * as dormHallway from './dormHallway.js'
 import * as closetGame from '../minigames/closetGame.js'
 import * as dorm from './dorm.js'
-import * as card from '../minigames/card.js'
+import * as cardGame from '../minigames/cardGame.js'
 import * as ending1 from '../minigames/ending1.js'
 import * as ending2 from '../minigames/ending2.js'
+import * as card from '../npc/card.js'
 
 
 export const maplist = {
@@ -18,9 +19,10 @@ export const maplist = {
     dormHallway: dormHallway,
     dorm : dorm,
     closetGame : closetGame,
-    card : card,
+    cardGame : cardGame,
     ending1: ending1,
-    ending2: ending2
+    ending2: ending2,
+    card: card
 
 }
 

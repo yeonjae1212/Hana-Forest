@@ -162,19 +162,20 @@ const playerState = {//맵 별로 초기 시작 위치 다르게 설정 가능
     dormHallway:{x:430,y:130,xin:1000,yin:360},
     dorm: { x: 580, y : 570},
     closetGame: { x: 100, y: 590 }, 
-    card :{x:500,y:500},
-    ending:{x:0,y:0}
+    cardGame :{x:500,y:500},
+    ending:{x:0,y:0},
+    card: {x:0, y:0}
 }
 
 export let player = {
-    state : "classroom",
+    state : "dormHallway",
     mode: "",
     x : 1000,
     y: 600,
     width : 80,
     height: 80,
     speed : 10,
-    key: 10,
+    key: 1,
     interaction:true,
 
     

@@ -7,8 +7,9 @@ export const ctx = canvas.getContext('2d');
 canvas.width = 1280;
 canvas.height = 720;
 
-const miniGames = ['card', 'closetGame', 'robot','ending1','ending2']; // 필요한 만큼 확장 가능
-const playerStatic = ['robot','ending1','ending2'] //대화 등 플레이어 이동 제한 상황
+const miniGames = ['closetGame', 'robot','ending1','ending2','cardGame']; // 필요한 만큼 확장 가능
+const playerStatic = ['robot','ending1','ending2','card'] //대화 등 플레이어 이동 제한 상황
+const npc = ['card']
 
 Input.init();
 loadMap(player.state);
@@ -69,6 +70,10 @@ function frame() {
             game.init(player);
         }
         game.gameLoop(player, isColliding, loadMap);
+    }
+    if(npc.includes(player.state)){
+        const npc = maplist[player.state]
+        npc.showConversation(player,loadMap)
     }
 
     if(!playerStatic.includes(player.state)){
