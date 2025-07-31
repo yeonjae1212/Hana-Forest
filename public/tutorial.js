@@ -28,9 +28,9 @@ nextBtn.innerText = "다음";
 // 버튼 스타일 설정 (아래 중앙에 고정)
 nextBtn.style.position = "absolute";
 nextBtn.style.left = "50%";
-nextBtn.style.bottom = "40px";
+nextBtn.style.bottom = "50px";
 nextBtn.style.transform = "translateX(-50%)";
-nextBtn.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
+nextBtn.style.backgroundColor = "rgba(221, 131, 35, 0.87)";
 nextBtn.style.padding = "10px";
 nextBtn.style.border = "2px solid #333";
 nextBtn.style.fontSize = "17px";
@@ -47,7 +47,7 @@ nextBtn.onclick = () => {
 
     // 마지막 이미지일 때 텍스트 변경
     if (currentImageIndex === tutorialImages.length - 1) {
-      nextBtn.innerText = "튜토리얼 완료";
+      nextBtn.innerText = "튜토리얼 끄읏!";
     }
   } else {
     completeTutorial();

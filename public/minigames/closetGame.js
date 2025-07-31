@@ -4,7 +4,20 @@ const canvas = document.getElementById('canvas');
 const canvasRect = canvas.getBoundingClientRect();
 const ctx = canvas.getContext("2d");
 
-// 스코어 표시 DOM
+const backgroundImg = new Image();
+backgroundImg.src = "/images/background.jpg";
+let isBackgroundLoaded = false;
+backgroundImg.onload = () => {
+  isBackgroundLoaded = true;
+};
+
+function drawBackground(ctx) {
+  if (isBackgroundLoaded) {
+    ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
+  }
+}
+
+// 점수 표시 DOM
 const scoreDisplay = document.createElement("div");
 scoreDisplay.id = "scoreDisplay";
 scoreDisplay.innerHTML = `<div id="score">Score: 0</div>`;
@@ -25,21 +38,28 @@ scoreDisplay.style.zIndex = "1000";
 const startContainer = document.createElement("div");
 startContainer.id = "startContainer";
 startContainer.innerHTML = `
-  <p>게임을 시작하려면 버튼을 누르세요</p>
-  <button id="startGameBtn">Start</button>`;
+    <p id ='title'>룸메 옷장에 숨겨져있는 로봇 부품을 찾아야합니다!</p>
+    <p class = 'text'>로봇 부품을 찾고 있던 당신.</p>
+    <p class = 'text'>룸메의 옷장 어딘가에 그것이 있다는 것을 알아냈습니다. </p>
+    <p class = 'text'>옷장에서 마구 떨어지는 로봇 부품 아이템을 찾아 담아보세요!</p>
+    <p class = 'text'>찾아야 하는것: ~~~(나중에 추가)</p>
+    <p class = 'text'>찾으면 안되는 것: ~~~(나중에 추가)</p>
+    <button id="startGameBtn">Start</button>`;
 startContainer.classList.add("scoreDisplay");
-startContainer.style.position = "absolute";
-startContainer.style.left = `${canvasRect.left + canvasRect.width / 2}px`;
-startContainer.style.top = `${canvasRect.top + canvasRect.height / 2}px`;
-startContainer.style.transform = 'translate(-50%, -50%)';
-startContainer.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
-startContainer.style.padding = "10px";
-startContainer.style.border = "2px solid #333";
-startContainer.style.borderRadius = "5px";
-startContainer.style.textAlign = "center";
-startContainer.style.fontSize = "16px";
-startContainer.style.color = "#000";
-startContainer.style.zIndex = "1000";
+   Object.assign(startContainer.style, {
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    padding: "10px",
+    border: "2px solid #333",
+    borderRadius: "5px",
+    textAlign: "center",
+    fontSize: "16px",
+    color: "#000",
+    zIndex: "1000"
+  });
 
 export let isInitialized = false;
 export let frameCount = 0;
@@ -48,7 +68,7 @@ let hasKeyListener = false;
 let startTime = null;
 let gameOver = false;
 let maxTime = 15000;
-let goalScore = 10;
+let goalScore = 15;
 let score = 0;
 
 let fallingItems = [];
@@ -60,7 +80,7 @@ const cart = {
   y: 640,
   width: 120,
   height: 50,
-  speed: 8,
+  speed: 15,
   movingLeft: false,
   movingRight: false
 };
@@ -94,7 +114,7 @@ class FallingItem {
     this.height = 50;
     this.type = type;
     this.score = score;
-    this.speed = 5;
+    this.speed = 15;
   }
 
   draw(ctx) {
@@ -142,18 +162,20 @@ function drawCart(ctx) {
 export function showEndMessage(message, delay = 3000, player = null, loadMap = null) {
   const canvasRect = canvas.getBoundingClientRect();
   const messageBox = document.createElement('div');
-  messageBox.style.position = "absolute";
-  messageBox.style.left = `${canvasRect.left + canvasRect.width / 2}px`;
-  messageBox.style.top = `${canvasRect.top + canvasRect.height / 2}px`;
-  messageBox.style.transform = 'translate(-50%, -50%)';
-  messageBox.className = 'messageBox';
-  messageBox.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
-  messageBox.style.padding = "20px";
-  messageBox.style.border = "2px solid #333";
-  messageBox.style.borderRadius = "5px";
-  messageBox.style.fontSize = "40px";
-  messageBox.style.color = "#000";
-  messageBox.style.zIndex = "1000";
+   Object.assign(messageBox.style, {
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    padding: "10px",
+    border: "2px solid #333",
+    borderRadius: "5px",
+    textAlign: "center",
+    fontSize: "40px",
+    color: "#000",
+    zIndex: "1000"
+  });
   messageBox.textContent = message;
   document.body.appendChild(messageBox);
 
@@ -166,7 +188,6 @@ export function showEndMessage(message, delay = 3000, player = null, loadMap = n
       player.x = 800;
       player.y = 150;
     } else {
-      // 실패한 경우 게임 재시작 창 다시 표시
       if (!document.getElementById("startContainer")) {
         const restartContainer = document.createElement("div");
         restartContainer.id = "startContainer";
@@ -205,8 +226,6 @@ export function showEndMessage(message, delay = 3000, player = null, loadMap = n
     }
   }, delay);
 }
-
-
 
 export function init(player) {
   if (!document.getElementById("scoreDisplay")) {
@@ -253,8 +272,11 @@ export function gameLoop(player, _, loadMap) {
   if (!isInitialized || gameOver) return;
 
   frameCount++;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  // 배경 먼저 그리기
+  drawBackground(ctx);
+
+  // 이후 내용 그리기 (clearRect 제거)
   if (cart.movingLeft) cart.x -= cart.speed;
   if (cart.movingRight) cart.x += cart.speed;
   cart.x = Math.max(0, Math.min(canvas.width - cart.width, cart.x));
@@ -277,27 +299,28 @@ export function gameLoop(player, _, loadMap) {
 
   drawCart(ctx);
 
-  if (score >= goalScore) {
+
+  if (score >= 10) {
   gameOver = true;
   scoreDisplay.remove();
   player.key = 9;
-  showEndMessage("성공!", 3000, player, loadMap); // 그대로
+  showEndMessage("성공!", 3000, player, loadMap);
   return;
 }
 
-if (score <= -10) {
-  gameOver = true;
-  scoreDisplay.remove();
-  showEndMessage("실패 ㅠㅠ", 3000); // player, loadMap 전달 안 함
-  return;
-}
 
-const elapsed = performance.now() - startTime;
-if (elapsed >= maxTime) {
-  gameOver = true;
-  scoreDisplay.remove();
-  const message = score >= goalScore ? "성공!" : "실패 ㅠㅠ";
-  showEndMessage(message, 3000, message === "성공!" ? player : null, message === "성공!" ? loadMap : null);
-}
+  if (score <= -10) {
+    gameOver = true;
+    scoreDisplay.remove();
+    showEndMessage("실패 ㅠㅠ", 3000);
+    return;
+  }
 
+  const elapsed = performance.now() - startTime;
+  if (elapsed >= maxTime) {
+    gameOver = true;
+    scoreDisplay.remove();
+    const message = score >= goalScore ? "성공!" : "실패 ㅠㅠ";
+    showEndMessage(message, 3000, message === "성공!" ? player : null, message === "성공!" ? loadMap : null);
+  }
 }

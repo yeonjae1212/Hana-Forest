@@ -8,7 +8,7 @@ export const obstacles = [
 
 ]
 export const interaction = [
-    new Block(1200,100,100,600,'whereToGo',null,"어디로 이동하면 좋을까?"),
+    new Block(1100,100,200,600,'whereToGo',null,"어디로 이동하면 좋을까?"),
     new Block(400,50,150,100,'dorm',dorm,"기숙사 호실로 들어가시겠습니까?"),
     new Block(200,380,80,80,'card',card,"선생님과 대화를 시작하시겠습니까?",null,1)
 ]
