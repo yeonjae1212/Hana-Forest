@@ -11,7 +11,7 @@ export const obstacles = [
 ]
 export const interaction = [
     new Block(120,500,80,80,'friend',friend,"친구를 찾았다! 말을 걸어볼까?"),
-    new Block(870,100,50,100,'robotPart',robotPart,"로봇 부품을 가져가시겠습니까?",null,6),
+    new Block(870,100,50,100,'robotPart',robotPart,"로봇 부품을 챙겨갈까?",null,6),
     new Block(200,650,200,100,'whereToGo',null,"어디로 가면 좋을까?")
 ]
 
@@ -26,7 +26,7 @@ export function friend(player){
         showMessage("부품을 찾아봐!",1500,player)
     }
     else{
-        showMessage('다 완성하면 나도 한번 태워줘~',1500,player)
+        showMessage('다 완성하면 나도 나중에 꼭 태워줘~!!',1500,player)
     }
 
     player.state = 'studyRoom';

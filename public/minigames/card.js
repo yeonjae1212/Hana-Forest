@@ -28,34 +28,29 @@ Object.assign(scoreDisplay.style, {
 // 게임 시작 버튼 html DOM으로 표시
 // -----------------------------------------------------------
 const startContainer = document.createElement("div");
-const canvasRect = canvas.getBoundingClientRect();
 startContainer.id = "startContainer";
 startContainer.innerHTML = `
-    <p id ='title'>생활관 선생님이 던지시는 벌점 카드를 피해야 합니다!</p>
-    <p class = 'text'>지난날 다 먹은 라면 용기를 들켰던 당신.</p>
-    <p class = 'text'>어제는 벌점을 피했었지만 오늘은 빠져나가지 못했습니다ㅠ</p>
-    <p class = 'text'>날아오는 벌점카드를 피해 5초간 살아남으세요!</p>
-    <button id="startGameBtn">Start</button>`;
-startContainer.classList.add("scoreDisplay");
- Object.assign(startContainer.style, {
-    position: 'absolute',
-    left: '50%',
-    top: '50%',
-    transform: 'translate(-50%, -50%)',
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
-    padding: "10px",
-    border: "2px solid #333",
-    borderRadius: "5px",
-    textAlign: "center",
-    fontSize: "16px",
-    color: "#000",
-    zIndex: "1000"
-  });
+  <p>게임을 시작하려면 버튼을 누르세요</p>
+  <button id="startGameBtn">Start</button>`;
+Object.assign(startContainer.style, {
+  position: "absolute",
+  left: `50%`,
+  top: `50%`,
+  transform: "translate(-50%, -50%)",
+  backgroundColor: "rgba(255, 255, 255, 0.9)",
+  padding: "10px",
+  border: "2px solid #333",
+  borderRadius: "5px",
+  textAlign: "center",
+  fontSize: "16px",
+  color: "#000",
+  zIndex: "1000"
+});
 
 // -----------------------------------------------------------
 // 게임 실패, 성공 시 메시지 띄우는 함수 정의
 // -----------------------------------------------------------
-export function showEndMessage(message, delay = 1500) {
+export function showEndMessage(message, delay = 500) {
   const messageBox = document.createElement('div');
   messageBox.textContent = message;
   Object.assign(messageBox.style, {
@@ -68,47 +63,13 @@ export function showEndMessage(message, delay = 1500) {
     border: "2px solid #333",
     borderRadius: "5px",
     textAlign: "center",
-    fontSize: "16px",
+    fontSize: "40px",
     color: "#000",
     zIndex: "1000"
   });
   canvasWrapper.appendChild(messageBox);
   setTimeout(() => messageBox.remove(), delay);
 }
-
-export function showOverMessage() {
-      if (!document.getElementById("startContainer")) {
-        const restartContainer = document.createElement("div");
-        const canvasRect = canvas.getBoundingClientRect();
-        restartContainer.id = "startContainer";
-        restartContainer.innerHTML = `
-          <p>실패 ㅠㅠ</p>
-          <p>게임을 다시 시작하려면 버튼을 누르세요</p>
-          <button id="startGameBtn">Start</button>`;
-        restartContainer.classList.add("scoreDisplay");
-
-        Object.assign(restartContainer.style, {
-          position: 'absolute',
-          left: '50%',
-          top: '50%',
-          transform: 'translate(-50%, -50%)',
-          backgroundColor: "rgba(255, 255, 255, 0.9)",
-          padding: "10px",
-          border: "2px solid #333",
-          borderRadius: "5px",
-          textAlign: "center",
-          fontSize: "16px",
-          color: "#000",
-          zIndex: "1000"
-        });
-        document.body.appendChild(restartContainer);
-
-        const startBtn = document.getElementById("startGameBtn");
-        startBtn.onclick = () => {
-          isInitialized = false;
-          gameOver = false;
-          restartContainer.remove();
-}}}
 
 // -----------------------------------------------------------
 // 게임 기본 변수 설정
@@ -128,7 +89,6 @@ export let interaction = [];
 //------------------------------------------------------------
 
 export function init(player) {
-  console.log('game started')
   if (!document.getElementById("scoreDisplay")) {
     canvasWrapper.appendChild(scoreDisplay);
   }
@@ -184,8 +144,11 @@ function move(player, callback) {
       obstacles.splice(i, 1);
     }
     if (!gameOver && !gameFinished && callback(player, obs)) {
-      gameOver = true
-      showOverMessage()
+      showEndMessage("실패 ㅠㅠ");
+      setTimeout(() => {
+        isInitialized = false;
+        gameOver = true;
+      }, 500);
     }
     obs.x -= obs.speed;
     obs.y = obs.baseY + Math.sin(frameCount * obs.freq) * obs.amplitude;
@@ -202,22 +165,20 @@ export function gameLoop(player, callback, loadMap) {
   const elapsed = now - startTime;
   const seconds = (elapsed / 1000).toFixed(1);
   scoreDisplay.textContent = `Score: ${seconds}s`;
-  if(!gameOver){
+
+  makeObs();
+  move(player, callback);
+
   if (!gameFinished && elapsed >= maxTime) {
     gameFinished = true;
     scoreDisplay.remove();
     player.key = 2;
-    console.log(`player key is changed to${player.key}`)
     showEndMessage("성공!");
     setTimeout(() => {
       player.state = 'dormHallway';
       loadMap('dormHallway');
       player.x = 300;
       player.y = 380;
-    }, 1500);
+    }, 500);
   }
-  }
-  makeObs();
-  move(player, callback);
-
 }

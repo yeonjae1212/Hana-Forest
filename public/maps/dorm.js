@@ -3,38 +3,29 @@ import { Block } from "./block.js";
 
 export const obstacles = [
   // Left Top Bed + Desk
-  new Block(0, 220, 140, 180, "desk_top_left"),
-  new Block(0, 60, 350, 165, "bed_top_left"),
+  new Block(0, 165, 250, 180, "desk_top_left"),
+  new Block(0, 0, 350, 165, "bed_top_left"),
 
   // Left Bottom Bed + Desk
-  new Block(0, 550, 140, 180, "desk_bottom_left"),
-  new Block(0, 390, 350, 165, "bed_bottom_left"),
+  new Block(0, 500, 250, 250, "desk_bottom_left"),
+  new Block(0, 345, 350, 180, "bed_bottom_left"),
 
   // Right Top Bed + Desk
-  new Block(1140, 220, 140, 180, "desk_top_right"),
-  new Block(950, 60, 350, 165, "bed_top_right"),
+  new Block(1030, 165, 250, 180, "desk_top_right"),
+  new Block(950, 0, 350, 165, "bed_top_right"),
 
   // Right Bottom Bed + Desk
-  new Block(1140, 550, 140, 180, "desk_bottom_right"),
-  new Block(950, 390, 350, 165, "bed_bottom_right"),
+  new Block(1030, 500, 250, 250, "desk_bottom_right"),
+  new Block(950, 345, 350, 180, "bed_bottom_right"),
 
-  // Center Closets (2x2)
-  new Block(480, 155, 145, 180, "closet_top_left"),
-  new Block(480, 335, 145, 180, "closet_bottom_left"),
-  new Block(615, 335, 145, 180, "closet_bottom_right"),
-  new Block(615, 155, 145, 180,'closet_top_right'),
-
-  // Window
-  new Block(450, 0, 320, 50, "Window"),
-
-  new Block(1020, 290, 20, 20, "roommateNPC"),
-
+  // Center Closets (1x4)
+  new Block(575, 40, 130, 500, "closet_top"),
 ];
 
 export const interaction = [
-  new Block(650, 75, 145, 260, "closetGame",closetGame,"옷장에서 부품을 찾아보자!",null,8),
-  new Block(980, 250, 100, 100, "roommateNPC",roommateNPC,"룸메이트와 대화하시겠습니까?"),
-  new Block(540, 650, 160, 60, "dormHallway",dormHallway,"복도로 이동하시겠습니까?")
+  new Block(575, 170, 150, 160, "closetGame",closetGame,"옷장에서 로봇 부품을 찾아보자!",null,8),
+  new Block(900, 220, 80, 80, "roommateNPC",roommateNPC,"룸메이트와 대화해볼까?"),
+  new Block(560, 660, 160, 200, "dormHallway",dormHallway,"복도로 나가볼까?")
 ];
 
 export function dormHallway(player){
@@ -44,7 +35,7 @@ export function dormHallway(player){
   }
   player.interaction = true
   player.state = 'dormHallway';
-  player.x = 430
+  player.x = 390
   player.y = 150
 }
 
@@ -58,13 +49,13 @@ export function closetGame(player){
 
 export function roommateNPC (player){
   if(player.key==0||player.key==1){
-    showMessage("로봇 제작은 잘 돼가?<br>오늘 교교에서 마저 완성한다고 했었지?",4000,player)
+    showMessage("대회용 로봇 제작은 잘 돼가?<br>오늘 교교에서 마저 완성한다고 했었지?",4000,player)
   }
   else if(player.key==8){
-        showMessage("로봇 부품 하나는 내 옷장 안에 있어!",1500,player)
+        showMessage("로봇 부품 하나는 내 옷장 어딘가에 있을꺼야!",1500,player)
   }
   else{
-    showMessage("얼른 로봇 부품을 찾자!",1500,player)
+    showMessage("얼른 로봇 부품을 찾아보자!",1500,player)
   }
 }
 

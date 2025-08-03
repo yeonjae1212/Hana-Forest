@@ -18,14 +18,14 @@ const messageBox = document.createElement('div');
 Object.assign(messageBox.style, {
     position: 'absolute',
     left: '80%',
-    top: '10%',
+    top: '7%',
     transform: 'translate(-50%, -50%)',
     backgroundColor: "rgba(255, 255, 255, 0.9)",
-    padding: "7px",
+    padding: "10px",
     border: "2px solid #333",
     borderRadius: "5px",
     textAlign: "center",
-    fontSize: "10px",
+    fontSize: "15px",
     color: "#000",
     zIndex: "1000"
 });

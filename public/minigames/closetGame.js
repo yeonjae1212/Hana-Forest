@@ -23,7 +23,7 @@ scoreDisplay.id = "scoreDisplay";
 scoreDisplay.innerHTML = `<div id="score">Score: 0</div>`;
 scoreDisplay.classList.add('scoreDisplay');
 scoreDisplay.style.position = "absolute";
-scoreDisplay.style.left = `${canvasRect.left + 20}px`;
+scoreDisplay.style.left = `${canvasRect.left + 40}px`;
 scoreDisplay.style.top = `${canvasRect.top + 20}px`;
 scoreDisplay.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
 scoreDisplay.style.padding = "10px";
@@ -42,14 +42,14 @@ startContainer.innerHTML = `
     <p class = 'text'>로봇 부품을 찾고 있던 당신.</p>
     <p class = 'text'>룸메의 옷장 어딘가에 그것이 있다는 것을 알아냈습니다. </p>
     <p class = 'text'>옷장에서 마구 떨어지는 로봇 부품 아이템을 찾아 담아보세요!</p>
-    <p class = 'text'>찾아야 하는것: ~~~(나중에 추가)</p>
-    <p class = 'text'>찾으면 안되는 것: ~~~(나중에 추가)</p>
+    <p class = 'text'>찾아야 하는것: 볼트(+1), 렌치(+2), 로봇 얼굴(+3)</p>
+    <p class = 'text'>찾으면 안되는 것: 티셔츠(-1), 재킷(-2), 라면(-3)</p>
     <button id="startGameBtn">Start</button>`;
 startContainer.classList.add("scoreDisplay");
    Object.assign(startContainer.style, {
     position: 'absolute',
     left: '50%',
-    top: '50%',
+    top: '40%',
     transform: 'translate(-50%, -50%)',
     backgroundColor: "rgba(255, 255, 255, 0.9)",
     padding: "10px",
@@ -67,7 +67,7 @@ let hasKeyListener = false;
 
 let startTime = null;
 let gameOver = false;
-let maxTime = 15000;
+let maxTime = 20000;
 let goalScore = 15;
 let score = 0;
 
@@ -77,44 +77,50 @@ export let interaction = [];
 
 const cart = {
   x: 600,
-  y: 640,
+  y: 600,
   width: 120,
-  height: 50,
-  speed: 15,
+  height: 85,
+  speed: 20,
   movingLeft: false,
   movingRight: false
 };
 
 const imageAssets = {
-  white: new Image(),
-  black: new Image(),
+  shirt: new Image(),
+  jacket: new Image(),
   ramen: new Image(),
-  perfume: new Image(),
+  bolt: new Image(),
+  wrench: new Image(),
+  robotHead: new Image(),
   cart: new Image()
 };
 
-imageAssets.white.src = "/images/white.jpg";
-imageAssets.black.src = "/images/black.jpg";
-imageAssets.ramen.src = "/images/ramen.jpg";
-imageAssets.perfume.src = "/images/perfume.jpg";
-imageAssets.cart.src = "/images/cart.jpg";
+imageAssets.shirt.src = "/images/shirt.png";
+imageAssets.jacket.src = "/images/jacket.png";
+imageAssets.ramen.src = "/images/ramen.png";
+imageAssets.bolt.src = "/images/bolt.png";
+imageAssets.wrench.src = "/images/wrench.png";
+imageAssets.robotHead.src = "/images/robotHead.png";
+imageAssets.cart.src = "/images/cart.png";
 
 const itemTypes = [
-  { name: "white", score: 1 },
-  { name: "black", score: -1 },
+  { name: "shirt", score: -1 },
+  { name: "jacket", score: -2 },
   { name: "ramen", score: -3 },
-  { name: "perfume", score: 2 }
+  { name: "bolt", score: 1 },
+  { name: "wrench", score: 2 },
+  { name: "robotHead", score: 3 }
 ];
 
 class FallingItem {
   constructor(x, y, type, score) {
     this.x = x;
     this.y = y;
-    this.width = 50;
-    this.height = 50;
+    this.width = 80;
+    this.height = 80;
     this.type = type;
     this.score = score;
-    this.speed = 15;
+    this.speed = 12;
   }
 
   draw(ctx) {
@@ -142,7 +148,7 @@ function checkCollision(a, b) {
 }
 
 function spawnItem() {
-  if (frameCount % 30 !== 0) return;
+  if (frameCount % 15 !== 0) return;
   const itemData = itemTypes[Math.floor(Math.random() * itemTypes.length)];
   const x = Math.random() * (canvas.width - 50);
   const item = new FallingItem(x, 0, itemData.name, itemData.score);
@@ -165,7 +171,7 @@ export function showEndMessage(message, delay = 3000, player = null, loadMap = n
    Object.assign(messageBox.style, {
     position: 'absolute',
     left: '50%',
-    top: '50%',
+    top: '40%',
     transform: 'translate(-50%, -50%)',
     backgroundColor: "rgba(255, 255, 255, 0.9)",
     padding: "10px",
