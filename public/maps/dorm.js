@@ -54,6 +54,9 @@ export function roommateNPC (player){
   else if(player.key==8){
         showMessage("로봇 부품 하나는 내 옷장 어딘가에 있을꺼야!",1500,player)
   }
+  else if(player.key>8){
+    showEndMessage('이제 교교로 가서 얼른 로봇을 조립해봐!',1500,player)
+  }
   else{
     showMessage("얼른 로봇 부품을 찾아보자!",1500,player)
   }

@@ -31,16 +31,12 @@ export function classroom(player){
 
 export function teacher_npc(player){
     if(player.key===4){
-        player.key++
-        console.log(`player key is changed to${player.key}`)
-        interaction[2].key=100
-        obstacles[3].key = 100
-    }
-    player.state = 'classroomHallway';
-    player.x = 900;
-    player.y = 400;
-    player.interaction = true
+        player.state = 'hallway_teacher';
+        player.x = 900;
+        player.y = 400;
+        player.interaction = true
 }
+    }
 
 export function whereToGo(player){
     if(player.key===5){

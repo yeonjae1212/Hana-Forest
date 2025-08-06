@@ -20,11 +20,13 @@ export class Block {
         };
         this.img.src = this.imageSrc;
     }
+
     drawObj(ctx){
         if(this.imgLoaded)
+            console.log(this.imageSrc)
             ctx.drawImage(this.img,this.x,this.y, this.width, this.height)
-
     }
+
         drawObstacle(ctx, color){
         ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.width, this.height)

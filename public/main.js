@@ -8,8 +8,8 @@ canvas.width = 1280;
 canvas.height = 720;
 
 const miniGames = ['closetGame', 'robot','ending1','ending2','cardGame']; // 필요한 만큼 확장 가능
-const playerStatic = ['robot','ending1','ending2','card'] //대화 등 플레이어 이동 제한 상황
-const npc = ['card']
+const playerStatic = ['robot','ending1','ending2','card','room_teacher','hallway_teacher','friend'] //대화 등 플레이어 이동 제한 상황
+const npc = ['card','room_teacher','hallway_teacher','friend']
 
 Input.init();
 loadMap(player.state);

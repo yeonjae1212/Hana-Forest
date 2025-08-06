@@ -23,10 +23,10 @@ export const interaction = [
 
 export function teacher_npc(player){
         if(player.key===3){
-        player.key++
-        console.log(`player key is changed to${player.key}`)
-        player.interaction = true
-
+          player.interaction = true
+          player.state = 'room_teacher'
+          player.x = 500
+          player.y = 500
     }
     else if(player.key ==10){
       showMessage("부품을 찾았으면 조립해봐!",1500,player)

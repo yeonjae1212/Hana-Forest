@@ -8,8 +8,10 @@ export const obstacles = [
 export const interaction = [
     new Block(1100, 130, 200, 600, 'whereToGo', null, "어디로 이동하면 좋을까?"),
     new Block(360, 0, 130, 130, 'dorm', dorm, "기숙사 호실로 들어갈까?"),
-    new Block(100, 380, 100, 100, 'card', card, "생활관 선생님과 대화를 시도해볼까?", null, 1)
+    new Block(100, 380, 100, 100, 'card', card, "생활관 선생님과 대화를 시도해볼까?",'../images/bolt.png', 1)
 ]
+
+       
 
 export function card(player){
     if(player.key===1){

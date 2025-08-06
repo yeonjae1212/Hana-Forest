@@ -17,22 +17,26 @@ export const interaction = [
 
 export function friend(player){
     if(player.key===5){
-        player.key++
         console.log(`player key is changed to${player.key}`)
         player.interaction = true
-
+        player.state = 'friend'
+        player.x = 500
+        player.y = 500
     }
     else if(player.key ==6){
         showMessage("부품을 찾아봐!",1500,player)
-    }
-    else{
-        showMessage('다 완성하면 나도 나중에 꼭 태워줘~!!',1500,player)
-    }
-
+        
     player.state = 'studyRoom';
     player.x = 220
     player.y = 500
-
+    }
+    else{
+        showMessage('다 완성하면 나도 나중에 꼭 태워줘~!!',1500,player)
+        
+    player.state = 'studyRoom';
+    player.x = 220
+    player.y = 500
+    }
 }
 
 export function robotPart(player){
