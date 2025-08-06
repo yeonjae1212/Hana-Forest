@@ -35,10 +35,10 @@ let imgLoaded = false;
 export function loadMap(state){
     imgLoaded = false;
     img.src = `../images/${state}.jpg`;
-    console.log('okk')
+    console.log('map image loading...')
     img.onload = () =>{
         imgLoaded = true;
-        console.log('ok')
+        console.log('map image loading')
     }
 
 }

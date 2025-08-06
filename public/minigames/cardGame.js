@@ -32,9 +32,9 @@ const canvasRect = canvas.getBoundingClientRect();
 startContainer.id = "startContainer";
 startContainer.innerHTML = `
     <p id ='title'>생활관 선생님이 던지시는 벌점 카드를 피해야 합니다!</p>
-    <p class = 'text'>지난날 다 먹은 라면 용기를 들켰던 당신.</p>
-    <p class = 'text'>어제는 벌점을 피했었지만 오늘은 빠져나가지 못했습니다ㅠ</p>
+    <p class = 'text'>이른 아침 기숙사를 빠져나가려다 걸린 당신.</p>
     <p class = 'text'>날아오는 벌점카드를 피해 5초간 살아남으세요!</p>
+    <p class = 'text'>(원래 이러면 안됩니다)</p>
     <button id="startGameBtn">Start</button>`;
 startContainer.classList.add("scoreDisplay");
  Object.assign(startContainer.style, {
