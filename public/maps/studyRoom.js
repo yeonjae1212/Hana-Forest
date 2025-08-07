@@ -6,7 +6,7 @@ export const obstacles = [
     new Block(870,70,230,420,'desk(r)'),
     new Block(0,620,200,100,'underWall(l)'),
     new Block(400,620,880,100,'underWall(r)'),
-    new Block(150,530,20,20,'friend'),
+    new Block(150,530,5,20,'friend'),
 
 ]
 export const interaction = [

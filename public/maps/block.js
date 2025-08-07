@@ -23,7 +23,6 @@ export class Block {
 
     drawObj(ctx){
         if(this.imgLoaded)
-            console.log(this.imageSrc)
             ctx.drawImage(this.img,this.x,this.y, this.width, this.height)
     }
 

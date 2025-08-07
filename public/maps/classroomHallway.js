@@ -2,8 +2,8 @@ import { Block } from "./block.js";
 
 export const obstacles = [
     new Block(0,0,1280,350,"wall"),
-    new Block(0,600,1100,120,'underWall(l,c)'),
-    new Block(1100,600,180,120,'underWall(r)'),
+    // new Block(0,600,1100,120,'underWall(l,c)'),
+    // new Block(1100,600,180,120,'underWall(r)'),
     new Block(965,370,30,100,'teacher npc',null,null,null,4)
 ]
 

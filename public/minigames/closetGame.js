@@ -22,17 +22,19 @@ const scoreDisplay = document.createElement("div");
 scoreDisplay.id = "scoreDisplay";
 scoreDisplay.innerHTML = `<div id="score">Score: 0</div>`;
 scoreDisplay.classList.add('scoreDisplay');
-scoreDisplay.style.position = "absolute";
-scoreDisplay.style.left = `${canvasRect.left + 40}px`;
-scoreDisplay.style.top = `${canvasRect.top + 20}px`;
-scoreDisplay.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
-scoreDisplay.style.padding = "10px";
-scoreDisplay.style.border = "2px solid #333";
-scoreDisplay.style.borderRadius = "5px";
-scoreDisplay.style.textAlign = "center";
-scoreDisplay.style.fontSize = "20px";
-scoreDisplay.style.color = "#000";
-scoreDisplay.style.zIndex = "1000";
+Object.assign(scoreDisplay.style, {
+  position: "absolute",
+  left: `20%`,
+  top: `10%`,
+  backgroundColor: "rgba(255, 255, 255, 0.9)",
+  padding: "10px",
+  border: "2px solid #333",
+  borderRadius: "5px",
+  textAlign: "center",
+  fontSize: "20px",
+  color: "#000",
+  zIndex: "1000"
+});
 
 // 시작 안내창 DOM
 const startContainer = document.createElement("div");

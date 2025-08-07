@@ -18,8 +18,8 @@ scoreDisplay.id = "scoreDisplay";
 scoreDisplay.innerHTML = `<div id="score">Score: 0.0s</div>`;
 Object.assign(scoreDisplay.style, {
   position: "absolute",
-  left: `300px`,
-  top: `50px`,
+  left: `20px`,
+  top: `20px`,
   backgroundColor: "rgba(255, 255, 255, 0.9)",
   padding: "10px",
   border: "2px solid #333",
@@ -34,21 +34,25 @@ Object.assign(scoreDisplay.style, {
 const startContainer = document.createElement("div");
 startContainer.id = "startContainer";
 startContainer.innerHTML = `
-  <p>게임을 시작하려면 버튼을 누르세요</p>
-  <button id="startGameBtn">Start</button>`;
-Object.assign(startContainer.style, {
-  position: "absolute",
-  left: `50%`,
-  top: `50%`,
-  transform: "translate(-50%, -50%)",
-  backgroundColor: "rgba(255, 255, 255, 0.9)",
-  padding: "10px",
-  border: "2px solid #333",
-  borderRadius: "5px",
-  textAlign: "center",
-  fontSize: "16px",
-  color: "#000",
-  zIndex: "1000"
+    <p id ='title'>생활관 선생님이 던지시는 벌점 카드를 피해야 합니다!</p>
+    <p class = 'text'>지난날 다 먹은 라면 용기를 들켰던 당신.</p>
+    <p class = 'text'>어제는 벌점을 피했었지만 오늘은 빠져나가지 못했습니다ㅠ</p>
+    <p class = 'text'>날아오는 벌점카드를 피해 5초간 살아남으세요!</p>
+    <button id="startGameBtn">Start</button>`;
+startContainer.classList.add("scoreDisplay");
+ Object.assign(startContainer.style, {
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    padding: "10px",
+    border: "2px solid #333",
+    borderRadius: "5px",
+    textAlign: "center",
+    fontSize: "16px",
+    color: "#000",
+    zIndex: "1000"
 });
 
 // 게임 종료 메시지

@@ -5,7 +5,7 @@ export const obstacles = [
     new Block(350,0,1000,175, "upper wall(r)"), 
     new Block(0,330,50,500, "blackboard"),
     // new Block(190, 375, 90, 150, "table_1"),
-    new Block(430, 520, 210, 200, "table_group"),
+    new Block(180, 520, 210, 200, "table_group"),
     new Block(880, 500, 90, 160,"table_2"),
     new Block(1065, 450, 100, 160, "table_3"),
     new Block(610,130,160,160,"robot"),

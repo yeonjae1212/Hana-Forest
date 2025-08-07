@@ -76,7 +76,6 @@ export function drawMap(ctx, canvas, player){
     // }
     for (let i of maplist[player.state].interaction){
         if((player.key == i.key||i.key==-1)&&(i.imgLoaded)){
-            console.log(`obj image: ${i.name}`)
         i.drawObj(ctx)
         }
     }

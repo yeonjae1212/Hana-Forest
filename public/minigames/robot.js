@@ -95,9 +95,9 @@ export class HiddenObject extends Block {
 
 
 export let interaction = [
-    new HiddenObject(940, 300, 100,100,'sahur',null, '로봇 조립을 방해하던 "퉁퉁퉁퉁퉁퉁 사후르"를 찾았습니다!',"/images/sahur.jpg"),
-    new HiddenObject(860,500,50,100,'tralalelo',null,'로봇 조립을 방해하던 "트랄라레로 트랄랄라"를 찾았습니다!','/images/tralalelo.jpg'),
-    new HiddenObject(1020, 450, 50, 100, 'hambook',null, '로봇 조립을 방해하던"햄부기햄북 햄북어 햄북스딱스 함부르크햄부가우가 햄비기햄부거 햄부가티햄부기온앤 온"을 차려왔습니다!','/images/hambook.jpg')
+    new HiddenObject(966, 210, 40, 70,'sahur',null, '로봇 조립을 방해하던 "퉁퉁퉁퉁퉁퉁 사후르"를 찾았습니다!',"/images/sahur.png"),
+    new HiddenObject(747,217,180,180,'tralalelo',null,'로봇 조립을 방해하던 "트랄라레로 트랄랄라"를 찾았습니다!','/images/tralalelo.png'),
+    new HiddenObject(801, 505, 70, 70, 'hambook',null, '로봇 조립을 방해하던"햄부기햄북 햄북어 햄북스딱스 함부르크햄부가우가 햄비기햄부거 햄부가티햄부기온앤 온"을 차려왔습니다!','/images/hambook.png')
 ];
 
 // -----------------------------------------------------------
