@@ -1,15 +1,15 @@
 import { Block } from "../maps/block.js";
 
-export const interaction = []
-export const obstacles = [
-new Block(460,300,300,140,'oribae',null,null)
+export const obstacles = []
+export const interaction = [
+new Block(460,450,400,400,'oribae',null,null,'../images/robot2.png')
 ]
 let frameCount = 0
 
 export function init(player){}
 
 export function gameLoop(player, isColliding, loadMap){
-    let ori = obstacles[0]
+    let ori = interaction[0]
     ori.y--
     ori.y--
     if(ori.y<-300){

@@ -34,35 +34,38 @@ startContainer.classList.add("scoreDisplay")
 //게임 실패, 성공 시 메시지 띄우는 함수 정의
 //------------------------------------------------------------
 export function showEndMessage(message, delay = 1500, player,loadMap) {
-  const canvasRect = canvas.getBoundingClientRect();
-  const messageBox = document.createElement('div');
-  messageBox.style.position = "absolute";
-  messageBox.style.left = `${canvasRect.left + canvasRect.width / 2}px`;
-  messageBox.style.top = `${canvasRect.top + canvasRect.height / 2}px`;
-  messageBox.style.transform = 'translate(-50%, -50%)';
-  messageBox.className = 'messageBox';
-  messageBox.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
-  messageBox.style.padding = "20px";
-  messageBox.style.border = "2px solid #333";
-  messageBox.style.borderRadius = "5px";
-  messageBox.style.fontSize = "40px";
-  messageBox.style.color = "#000";
-  messageBox.style.zIndex = "1000";
-  messageBox.textContent = message;
-  document.body.appendChild(messageBox);
-  
-    setTimeout(() => {
-        messageBox.remove(); //잠깐 기다렸다가 메시지박스 제거
-        if(message=='성공!'){
-            player.key = 11
-            console.log(`player key is changed to${player.key}`)
-            player.state = 'classroom';
-            player.x = 650;
-            player.y = 450;
-            loadMap('classroom');
-            return;
-        }
-    }, delay);
+  if(!document.getElementById('messageBox')){
+    const canvasRect = canvas.getBoundingClientRect();
+    const messageBox = document.createElement('div');
+    messageBox.id = 'messageBox'
+    messageBox.style.position = "absolute";
+    messageBox.style.left = `${canvasRect.left + canvasRect.width / 2}px`;
+    messageBox.style.top = `${canvasRect.top + canvasRect.height / 2}px`;
+    messageBox.style.transform = 'translate(-50%, -50%)';
+    messageBox.className = 'messageBox';
+    messageBox.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
+    messageBox.style.padding = "20px";
+    messageBox.style.border = "2px solid #333";
+    messageBox.style.borderRadius = "5px";
+    messageBox.style.fontSize = "40px";
+    messageBox.style.color = "#000";
+    messageBox.style.zIndex = "1000";
+    messageBox.textContent = message;
+    document.body.appendChild(messageBox);
+    
+      setTimeout(() => {
+          messageBox.remove(); //잠깐 기다렸다가 메시지박스 제거
+          if(message=='성공!'){
+              player.key = 11
+              console.log(`player key is changed to${player.key}`)
+              player.state = 'classroom';
+              player.x = 650;
+              player.y = 450;
+              loadMap('classroom');
+              return;
+          }
+      }, delay);
+  }
 }
 
 
@@ -81,6 +84,12 @@ export class HiddenObject extends Block {
     constructor(x, y, width, height, name,action,message,imageSrc) {
         super(x, y, width, height, name,action,message,imageSrc);
         this.found = false;
+        this.visible = false;
+    }
+    drawObj(ctx){
+      if (this.visible && this.imgLoaded) {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+      }
     }
 }
 
@@ -158,6 +167,7 @@ function checkHiddenObjects(x, y) {
         x >= obj.x && x <= obj.x + obj.width &&
         y >= obj.y && y <= obj.y + obj.height) {
       obj.found = true;
+      obj.visible = true;
       showEndMessage(obj.message,1500,null,null)
       // 점수 증가, 효과음 재생 등 추가 가능
     }
@@ -176,7 +186,7 @@ export function gameLoop(player,_,loadMap){ //이걸 main.js에서 불러서 분
     if (!gameOver&&interaction.every(block => block.found === true)) {
         gameOver=true
         setTimeout(() => {
-            showEndMessage("성공!",1500,player,loadMap);
+            showEndMessage("성공!",2500,player,loadMap);
         }, 1500); // 1초 후에 메시지 표시
     }
 

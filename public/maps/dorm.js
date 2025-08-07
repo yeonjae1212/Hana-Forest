@@ -4,28 +4,30 @@ import { Block } from "./block.js";
 export const obstacles = [
   // Left Top Bed + Desk
   new Block(0, 165, 250, 180, "desk_top_left"),
-  new Block(0, 0, 350, 165, "bed_top_left"),
+  new Block(0, 0, 400, 180, "bed_top_left"),
 
   // Left Bottom Bed + Desk
   new Block(0, 500, 250, 250, "desk_bottom_left"),
-  new Block(0, 345, 350, 180, "bed_bottom_left"),
+  new Block(0, 345, 400, 180, "bed_bottom_left"),
 
   // Right Top Bed + Desk
-  new Block(1030, 165, 250, 180, "desk_top_right"),
-  new Block(950, 0, 350, 165, "bed_top_right"),
+  new Block(1030, 165, 250, 200, "desk_top_right"),
+  new Block(900, 0, 400, 180, "bed_top_right"),
 
   // Right Bottom Bed + Desk
   new Block(1030, 500, 250, 250, "desk_bottom_right"),
-  new Block(950, 345, 350, 180, "bed_bottom_right"),
+  new Block(900, 345, 400, 180, "bed_bottom_right"),
 
   // Center Closets (1x4)
-  new Block(575, 40, 130, 500, "closet_top"),
+  new Block(575, 40, 130, 510, "closet_top"),
+
+  new Block(940,150,15,100,'roommate')
 ];
 
 export const interaction = [
   new Block(575, 170, 150, 160, "closetGame",closetGame,"옷장에서 로봇 부품을 찾아보자!",null,8),
-  new Block(900, 220, 80, 80, "roommateNPC",roommateNPC,"룸메이트와 대화해볼까?"),
-  new Block(560, 660, 160, 200, "dormHallway",dormHallway,"복도로 나가볼까?")
+  new Block(920, 150, 55, 160, "roommateNPC",roommateNPC,"룸메이트와 대화해볼까?",'../images/roommate.png'),
+  new Block(560, 600, 160, 200, "dormHallway",dormHallway,"복도로 나가볼까?")
 ];
 
 export function dormHallway(player){

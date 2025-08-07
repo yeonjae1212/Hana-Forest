@@ -1,8 +1,8 @@
 import { Block } from "../maps/block.js";
-export const obstacles = [
-    new Block(600,300,300,300,'oribae',null,null)
+export const interaction = [
+    new Block(600,450,100,100,'oribae',null,null,'../images/robot3.png')
 ]
-export const interaction = []
+export const obstacles = []
 
 
 const messageBox = document.createElement('div');
@@ -22,12 +22,9 @@ Object.assign(messageBox.style, {
 export function init(player){}
 
 export function gameLoop(player, isColliding, loadMap){
-    let ori = obstacles[0]
-    ori.y--
-    ori.x++
-    ori.height--
-    ori.width--
-    if(ori.y<100){
+    let ori = interaction[0]
+    ori.x--
+    if(ori.x<100){
         document.body.appendChild(messageBox);
     }
 }
